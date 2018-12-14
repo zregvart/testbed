@@ -1,8 +1,10 @@
 pipeline {
+  agent any
+
   options {
     buildDiscarder(
-        logRotator(artifactNumToKeepStr: '5', numToKeepStr: '10')
-        )
+      logRotator(artifactNumToKeepStr: '5', numToKeepStr: '10')
+    )
   }
 
   stages {
