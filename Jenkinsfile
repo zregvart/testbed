@@ -41,7 +41,12 @@ pipeline {
 
       steps {
         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'public', reportFiles: 'index.html', reportName: 'preview', reportTitles: ''])
-        githubPRComment comment: githubPRMessage('See the preview of the website at ${JOB_URL}/preview'), errorHandler: statusOnPublisherError('UNSTABLE'), statusVerifier: allowRunOnStatus('SUCCESS')
+      }
+      
+      post {
+        success {
+          githubPRComment comment: githubPRMessage('See the preview of the website at ${JOB_URL}/preview'), errorHandler: statusOnPublisherError('UNSTABLE'), statusVerifier: allowRunOnStatus('SUCCESS')
+        }
       }
     }
   }
