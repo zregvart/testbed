@@ -12,6 +12,7 @@ pipeline {
       stages {
         stage('Theme') {
           steps {
+            sh "env"
             sh "mkdir -p public"
             sh "touch public/theme"
           }
