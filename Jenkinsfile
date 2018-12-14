@@ -45,7 +45,8 @@ pipeline {
 
       post {
         success {
-          githubPRComment comment: githubPRMessage('See the preview of the website at ${JOB_URL}/preview'), errorHandler: statusOnPublisherError('UNSTABLE')
+          currentBuild.result = 'SUCCESS'
+          githubPRComment comment: githubPRMessage('See the preview of the website at ${JOB_URL}/preview'), errorHandler: statusOnPublisherError('UNSTABLE'), statusVerifier: allowRunOnStatus('SUCCESS')
         }
       }
     }
