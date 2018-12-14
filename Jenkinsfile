@@ -25,7 +25,7 @@ pipeline {
 
         stage('Website') {
           steps {
-            sh "echo hello world > public/index.html"
+            sh "echo 'hello world 2' > public/index.html"
           }
         }
       }
