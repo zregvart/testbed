@@ -50,29 +50,11 @@ pipeline {
       post {
         success {
           script {
-            def comment_text = "See the preview at ${JOB_URL}/preview"
-            def found = false
-            for (comment in pullRequest.comments) {
-              if (comment.user == 'camelesi' && comment.body == comment_text) {
-                found = true
-                break;
-              }
-            }
-
-            if (!found) {
-              pullRequest.comment(comment_text)
-            }
+            pullRequest.createStatus(status: 'success',
+                         context: 'CI Build',
+                         description: 'Successfully built, see the website preview by clicking Details',
+                         targetUrl: "${env.JOB_URL}/preview")
           }
-        }
-      }
-    }
-  }
-
-  post {
-    failure {
-      script {
-        if (env.CHANGE_ID) {
-          pullRequest.addLabel('ci:failed')
         }
       }
     }
