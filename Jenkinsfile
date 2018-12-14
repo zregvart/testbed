@@ -51,7 +51,7 @@ pipeline {
         success {
           script {
             pullRequest.createStatus(status: 'success',
-                         context: 'CI Build',
+                         context: 'Prevew website',
                          description: 'Successfully built, see the website preview by clicking Details',
                          targetUrl: "${env.JOB_URL}/preview")
           }
