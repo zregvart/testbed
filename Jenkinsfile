@@ -1,6 +1,10 @@
 pipeline {
   agent any
 
+  triggers {
+    issueCommentTrigger('.*test this please.*')
+  }
+
   options {
     buildDiscarder(
       logRotator(artifactNumToKeepStr: '5', numToKeepStr: '10')
@@ -46,9 +50,29 @@ pipeline {
       post {
         success {
           script {
-            currentBuild.result = 'SUCCESS'
+            def comment_text = "See the preview at ${JOB_URL}/preview"
+            def found = false
+            for (comment in pullRequest.comments) {
+              if (comment.user == 'camelesi' && comment.body == comment_text) {
+                found = true
+                break;
+              }
+            }
+
+            if (!found) {
+              pullRequest.comment(comment_text)
+            }
           }
-          githubPRComment comment: githubPRMessage('See the preview of the website at ${JOB_URL}/preview'), errorHandler: statusOnPublisherError('UNSTABLE'), statusVerifier: allowRunOnStatus('SUCCESS')
+        }
+      }
+    }
+  }
+
+  post {
+    failure {
+      script {
+        if (env.CHANGE_ID) {
+          pullRequest.addLabel('ci:failed')
         }
       }
     }
