@@ -5,7 +5,7 @@ pipeline {
     stage('Test') {
       steps {
         script {
-          pullRequest.addLabel('hello')
+          pullRequest.addLabels(['hello'])
         }
       }
     }
