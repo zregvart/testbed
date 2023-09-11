@@ -1,0 +1,16 @@
+name: Triggered
+
+"on":
+  workflow_run:
+    workflows: [Checks]
+    types: [completed]
+    branches: [master]
+
+jobs:
+  triggered:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          env
+          jq . "${GITHUB_EVENT_PATH}"
+          
