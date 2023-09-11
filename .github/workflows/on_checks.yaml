@@ -16,12 +16,12 @@ jobs:
         run: |
           env
           jq . "${GITHUB_EVENT_PATH}"
-          echo head_sha=$(gh api /repos/zregvart/testbed/git/matching-refs/heads/master --jq '.[0].object.sha') >> "$GITHUB_OUTPUT"
+          echo HEAD_SHA=$(gh api /repos/zregvart/testbed/git/matching-refs/heads/master --jq '.[0].object.sha') >> "$GITHUB_ENV"
       - name: see
         run: |
           echo workflow run: ${{github.event.workflow_run.head_sha}}
-          echo head:         ${{steps.info.outputs.head_sha}}
+          echo head:         ${{env.HEAD_SHA}}
       - name: release
         run: echo working
-        if: ${{ (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_sha == steps.info.outputs.head_sha) || github.event.workflow_dispatch }}
+        if: ${{ (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_sha == env.HEAD_SHA) || github.event.workflow_dispatch }}
           
