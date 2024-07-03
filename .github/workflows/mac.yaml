@@ -1,0 +1,11 @@
+name: mac
+
+on:
+  workflow_dispatch:
+
+jobs:
+  macos:
+    runs-on: macos-latest
+
+    steps:
+      - uses: lhotari/action-upterm@v1
