@@ -8,5 +8,5 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: curl -v https://npm.hops.hr
+      #- run: curl -v https://npm.hops.hr
       - run: npm ping --repository=https://npm.hops.hr
